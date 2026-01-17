@@ -66,16 +66,31 @@
         </div>
 
         <!-- Search Bar -->
-        <div class="flex items-center bg-gray-100 rounded-full px-5 py-2 w-1/2">
-  <input
-    id="cityInput"
-    type="text"
-    placeholder="Search here..."
-    class="bg-transparent outline-none flex-1 text-gray-600"
-  />
-  <button id="searchBtn">
-    <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
-  </button>
+       <!-- Search Section -->
+<div class="flex flex-col items-center w-1/2">
+
+  <!-- Search Bar -->
+  <div class="flex items-center bg-gray-100 rounded-full px-5 py-2 w-full">
+    <input
+      id="cityInput"
+      type="text"
+      placeholder="Search here..."
+      class="bg-transparent outline-none flex-1 text-gray-600"
+    />
+
+    <button id="searchBtn">
+      <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+    </button>
+  </div>
+
+  <!-- Error Message (ADD THIS HERE) -->
+  <p
+    id="errorMsg"
+    class="text-red-500 text-sm mt-2 hidden text-center"
+  >
+    Please enter a city name
+  </p>
+
 </div>
 
         <!-- Icons -->
