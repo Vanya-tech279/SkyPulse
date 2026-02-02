@@ -3,8 +3,8 @@ const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
 const locationBtn = document.getElementById("locationBtn");
 const errorMsg = document.getElementById("errorMsg");
-const locationName = document.getElementById("locationName"); // your top location span
-const mainCard = document.getElementById("weatherCard"); // main weather card
+const locationName = document.getElementById("locationName");
+const mainCard = document.getElementById("weatherCard");
 const unitToggle = document.getElementById("unitToggle"); 
 const recentSearchesList = document.getElementById("recentSearches");
 // ===================== RECENT SEARCHES DATA =====================
@@ -116,7 +116,7 @@ function formatTime(unixTime) {
 
 // Check if current time is between sunrise and sunset
 function isDayTime(sunriseUnix, sunsetUnix) {
-  const now = new Date().getTime() / 1000; // current timestamp in seconds
+  const now = new Date().getTime() / 1000; 
   return now >= sunriseUnix && now < sunsetUnix;
 }
 
@@ -263,9 +263,6 @@ if (isDayTime(data.sys.sunrise, data.sys.sunset)) {
   document.body.classList.remove("day");
   document.body.classList.add("night");
 }
-
-
-// Smooth transition for background
 document.body.style.transition = "background 1s ease-in-out";
 }
 // ===================== RENDER 5 DAY FORECAST =====================
@@ -360,7 +357,6 @@ locationBtn.addEventListener("click", () => {
 });
 
 // ===================== INITIAL WEATHER =====================
-// Optional: load default weather (e.g., London) on page load
 const savedCity = localStorage.getItem("lastCity");
 
 if (savedCity) {
