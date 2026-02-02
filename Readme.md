@@ -1,5 +1,5 @@
 # SkyPulse Weather App
-SkyPulse is a responsive web application that enables users to check the weather for any city or their current location.
+SkyPulse is a responsive website that enables users to check the weather for any city or their current location.
 ## Features
 - Enables users to search for weather by city name with input validation.
 - Enables users to get weather information using their current location (geolocation).
