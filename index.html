@@ -3,12 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <title>Weather Dashboard</title>
-
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="./JS/app.js" defer></script>
+  <style>
+  body.day {
+  background: linear-gradient(to bottom, #7dd3fc, #3b82f6);
+}
+
+body.night {
+  background:
+    linear-gradient(to bottom, #181fff, #000345),
+    url('https://i.ibb.co/2kVtR5T/stars.png');
+  background-size: cover;
+}
+
+</style>
+
 </head>
 
 <body class="bg-gray-100 min-h-screen">
@@ -17,106 +30,196 @@
   <div class="flex">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-white min-h-screen p-6">
-      <div class="flex flex-col items-center gap-8">
+    <aside class="w-64 p-6 flex flex-col justify-between bg-gradient-to-b from-white to-gray-100 min-h-screen">
 
-        <!-- Logo / Icon -->
-        <div class="text-blue-500 text-6xl">
-          <i class="fa-solid fa-cloud-rain"></i>
-        </div>
+  
+  <!-- Top Section: Logo + Menu -->
+  <div class="flex flex-col items-center gap-8">
+    <!-- Logo / Icon -->
+    <div class="text-blue-500 text-6xl">
+      <i class="fa-solid fa-cloud-rain"></i>
+    </div>
+    <h1 class="text-xl font-bold text-gray-700">SkyPulse</h1>
+    <!-- Menu -->
+    <nav class="flex flex-col gap-6 w-full text-gray-700">
+      <a class="flex items-center gap-3 font-semibold text-sky-500" href="">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a class="flex items-center gap-3" href="#forecastContainer">
+        <i class="fa-regular fa-newspaper"></i> 5-Day Forecast
+      </a>
+      <a class="flex items-center gap-3" href="#uvCard">
+        <i class="fa-solid fa-person-rays"></i> UV Index
+      </a>
+    </nav>
+  </div>
 
-        <!-- Menu -->
-        <nav class="flex flex-col gap-6 w-full text-gray-700 ">
-          <a class="flex items-center gap-3 font-semibold text-blue-500" href="">
-            <i class="fa-solid fa-house"></i> Home
-          </a>
-          <a class="flex items-center gap-3" href="">
-            <i class="fa-regular fa-newspaper"></i> Blogs
-          </a>
-          <a class="flex items-center gap-3" href="">
-            <i class="fa-regular fa-map"></i> Map
-          </a>
-          <a class="flex items-center gap-3" href="">
-            <i class="fa-regular fa-image"></i> Photos
-          </a>
-          <a class="flex items-center gap-3" href="">
-            <i class="fa-regular fa-circle-play"></i> Video
-          </a>
-          <a class="flex items-center gap-3" href="">
-            <i class="fa-regular fa-file"></i> Pages
-          </a>
-          <a class="flex items-center gap-3" href="">
-            <i class="fa-regular fa-address-book"></i> Contact
-          </a>
-        </nav>
+  <!-- Bottom Section: Optional Footer -->
+  <div class="text-gray-400 text-sm text-center">
+    &copy; 2026 SkyPulse. All rights reserved.
+  </div>
 
-      </div>
-    </aside>
+</aside>
+
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 p-8">
+      <!-- ERROR MESSAGE -->
+      <div id="errorMsg"
+  class="hidden mt-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg"
+></div>
 
       <!-- TOP BAR -->
       <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow">
 
         <!-- Location -->
-        <div class="flex items-center gap-2 text-gray-700 font-medium">
-          <i class="fa-solid fa-location-dot"></i>
-          <span>London, UK</span>
-        </div>
+       <div class="flex items-center gap-2 text-gray-700 font-medium">
+  <i class="fa-solid fa-location-dot"></i>
+  <span id="locationName">London, UK</span>
+</div>
+
 
         <!-- Search Bar -->
        <!-- Search Section -->
-<div class="flex flex-col items-center w-1/2">
+<div class="flex items-center gap-4">
 
-  <!-- Search Bar -->
+  <!-- Search Section -->
+  <div class="flex flex-col w-[400px] relative">
   <div class="flex items-center bg-gray-100 rounded-full px-5 py-2 w-full">
     <input
       id="cityInput"
       type="text"
-      placeholder="Search here..."
+      placeholder="Search city..."
       class="bg-transparent outline-none flex-1 text-gray-600"
     />
-
     <button id="searchBtn">
       <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
     </button>
   </div>
 
-  <!-- Error Message (ADD THIS HERE) -->
-  <p
-    id="errorMsg"
-    class="text-red-500 text-sm mt-2 hidden text-center"
-  >
-    Please enter a city name
-  </p>
-
+  <!-- ✅ DROPDOWN -->
+  <ul
+    id="recentSearches"
+    class="absolute top-full left-0 w-full bg-white border rounded mt-1 shadow hidden z-50"
+  ></ul>
 </div>
 
+
+  <!-- Current Location Button -->
+  <button
+    id="locationBtn"
+    class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+  >
+    <i class="fa-solid fa-location-crosshairs"></i>
+    Current Location
+  </button>
+
+</div>
         <!-- Icons -->
         <div class="flex items-center gap-6 text-gray-700 text-xl">
           <i class="fa-regular fa-calendar"></i>
           <i class="fa-regular fa-bell"></i>
         </div>
       </div>
+      <!-- Unit Toggle Button -->
+<div id="weatherCard" class="mt-8 bg-blue-400 rounded-3xl h-40 relative">
+  <button id="unitToggle" class="absolute top-4 right-4 bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">
+    °C
+  </button>
+</div>
 
-      <!-- BIG PLACEHOLDER (Future Weather Card) -->
-      <div class="mt-8 bg-blue-400 rounded-3xl h-40"></div>
 
       <!-- SECTION TITLE -->
-      <h2 class="mt-10 text-2xl font-semibold text-gray-700">
+      <h2 class="mt-10 text-2xl font-semibold text-yellow-600">
         Today’s Highlights
       </h2>
 
       <!-- PLACEHOLDER GRID -->
-      <div class="grid grid-cols-3 gap-6 mt-6">
-        <div class="bg-white h-24 rounded-xl"></div>
-        <div class="bg-white h-24 rounded-xl"></div>
-        <div class="bg-white h-24 rounded-xl"></div>
-        <div class="bg-white h-24 rounded-xl"></div>
-        <div class="bg-white h-24 rounded-xl"></div>
-        <div class="bg-white h-24 rounded-xl"></div>
-      </div>
+    <!-- TODAY'S HIGHLIGHTS -->
+<div class="grid grid-cols-3 gap-6 mt-6">
+  <!-- Row 1 -->
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-gauge-high text-blue-500"></i>
+      <span>Pressure</span>
+    </div>
+    <h3 id="pressure" class="text-2xl font-semibold text-gray-800">-- hPa</h3>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-droplet text-blue-500"></i>
+      <span>Humidity</span>
+    </div>
+    <h3 id="humidity" class="text-2xl font-semibold text-gray-800">-- %</h3>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-cloud text-blue-500"></i>
+      <span>Clouds</span>
+    </div>
+    <h3 id="clouds" class="text-2xl font-semibold text-gray-800">-- %</h3>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-wind text-blue-500"></i>
+      <span>Wind Speed</span>
+    </div>
+    <h3 id="wind" class="text-2xl font-semibold text-gray-800">-- m/s</h3>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-eye text-blue-500"></i>
+      <span>Visibility</span>
+    </div>
+    <h3 id="visibility" class="text-2xl font-semibold text-gray-800">-- km</h3>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-temperature-half text-blue-500"></i>
+      <span>Feels Like</span>
+    </div>
+    <h3 id="feelsLikeHighlight" class="text-2xl font-semibold text-gray-800">-- °C</h3>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-sun text-yellow-400"></i>
+      <span>Sunrise</span>
+    </div>
+    <h3 id="sunriseTime" class="text-2xl font-semibold text-gray-800">-- : --</h3>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
+    <div class="flex items-center gap-3 text-gray-500">
+      <i class="fa-solid fa-moon text-orange-500"></i>
+      <span>Sunset</span>
+    </div>
+    <h3 id="sunsetTime" class="text-2xl font-semibold text-gray-800">-- : --</h3>
+  </div>
+
+  <!-- Optional empty cell to fill row 3 -->
+  <div></div>
+</div>
+
+<!-- Forecast Section -->
+</div>
+<h2 class="mt-10 text-2xl font-semibold text-yellow-600 decorative-underline">
+  5-Day Forecast
+</h2>
+
+<div
+  id="forecastContainer"
+  class=" flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
+>
+<!--forecast cards-->
+</div>
 
     </main>
   </div>
