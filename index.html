@@ -30,9 +30,8 @@ body.night {
   <div class="flex">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 p-6 flex flex-col justify-between bg-gradient-to-b from-white to-gray-100 min-h-screen">
+<aside class="hidden lg:flex w-64 p-6 flex-col justify-between bg-gradient-to-b from-white to-gray-100 min-h-screen">
 
-  
   <!-- Top Section: Logo + Menu -->
   <div class="flex flex-col items-center gap-8">
     <!-- Logo / Icon -->
@@ -70,8 +69,7 @@ body.night {
 ></div>
 
       <!-- TOP BAR -->
-      <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow">
-
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-4 rounded-xl shadow">
         <!-- Location -->
        <div class="flex items-center gap-2 text-gray-700 font-medium">
   <i class="fa-solid fa-location-dot"></i>
@@ -82,9 +80,7 @@ body.night {
         <!-- Search Bar -->
        <!-- Search Section -->
 <div class="flex items-center gap-4">
-
-  <!-- Search Section -->
-  <div class="flex flex-col w-[400px] relative">
+<div class="flex flex-col w-full sm:w-[400px] relative">
   <div class="flex items-center bg-gray-100 rounded-full px-5 py-2 w-full">
     <input
       id="cityInput"
@@ -97,7 +93,7 @@ body.night {
     </button>
   </div>
 
-  <!-- ✅ DROPDOWN -->
+  <!-- DROPDOWN -->
   <ul
     id="recentSearches"
     class="absolute top-full left-0 w-full bg-white border rounded mt-1 shadow hidden z-50"
@@ -136,7 +132,7 @@ body.night {
 
       <!-- PLACEHOLDER GRID -->
     <!-- TODAY'S HIGHLIGHTS -->
-<div class="grid grid-cols-3 gap-6 mt-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
   <!-- Row 1 -->
   <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between h-32">
     <div class="flex items-center gap-3 text-gray-500">
@@ -203,9 +199,6 @@ body.night {
     </div>
     <h3 id="sunsetTime" class="text-2xl font-semibold text-gray-800">-- : --</h3>
   </div>
-
-  <!-- Optional empty cell to fill row 3 -->
-  <div></div>
 </div>
 
 <!-- Forecast Section -->
