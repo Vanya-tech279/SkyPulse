@@ -106,7 +106,7 @@ function showError(message) {
     errorMsg.textContent = "";
   }, 3000);
 }
-// Format Unix timestamp to HH:MM
+// Format Unix timestamp to HH:MM(like hours and minutes)
 function formatTime(unixTime) {
   return new Date(unixTime * 1000).toLocaleTimeString([], {
     hour: "2-digit",
@@ -121,7 +121,7 @@ function isDayTime(sunriseUnix, sunsetUnix) {
 }
 
 // ===================== FETCH WEATHER FUNCTIONS =====================
-const API_KEY = "70cf6fa8fe641664f06fc51ec5c60230"; // Replace with your OpenWeatherMap API key
+const API_KEY = "70cf6fa8fe641664f06fc51ec5c60230";
 
 async function fetchWeatherByCity(city) {
   try {
@@ -136,7 +136,7 @@ async function fetchWeatherByCity(city) {
     const data = await res.json();
     updateDashboard(data);
 
-    fetchFiveDayForecast(city); // ✅ ADD THIS
+    fetchFiveDayForecast(city); //
 
     localStorage.setItem("lastCity", city);
   } catch (err) {
@@ -239,10 +239,9 @@ mainCard.innerHTML = `
          class="w-32 h-32"/>
   </div>
 `;
-// Append last updated element
   mainCard.appendChild(lastUpdated);
   updateLastUpdated();
-// ===== SAFE HIGHLIGHTS UPDATE =====
+// ===================== ADDITIONAL DETAILS =====================
 const safeSet = (id, value) => {
   const el = document.getElementById(id);
   if (el) el.textContent = value;
@@ -257,24 +256,14 @@ safeSet("feelsLikeHighlight", `${Math.round(data.main.feels_like)} °C`);
 safeSet("sunriseTime", formatTime(data.sys.sunrise));
 safeSet("sunsetTime", formatTime(data.sys.sunset));
 // ===================== PAGE BACKGROUND (DAY/NIGHT) =====================
-const dayTime = isDayTime(data.sys.sunrise, data.sys.sunset);
-
-// Remove any previous classes
-document.body.classList.remove("day", "night");
-if (dayTime) {
-  // Day background using Tailwind blue gradient
+if (isDayTime(data.sys.sunrise, data.sys.sunset)) {
+  document.body.classList.remove("night");
   document.body.classList.add("day");
-  document.body.style.background = "linear-gradient(to bottom, #87CEFA, #1E3A8A)"; // light blue to deep blue
 } else {
-  // Night background with stars
+  document.body.classList.remove("day");
   document.body.classList.add("night");
-  document.body.style.background = `
-    linear-gradient(to bottom, #0b0c2b, #000),
-    url('https://i.ibb.co/2kVtR5T/stars.png')
-  `;
-  document.body.style.backgroundSize = "cover";
-  document.body.style.backgroundRepeat = "repeat";
 }
+
 
 // Smooth transition for background
 document.body.style.transition = "background 1s ease-in-out";
